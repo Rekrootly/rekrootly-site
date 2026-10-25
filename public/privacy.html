@@ -15,7 +15,8 @@
   :root{--crimson:#b91c2b;--ink:#1c1c1e;--muted:#5c5c63;--line:#e3e1dc}
   *{box-sizing:border-box}
   body{margin:0;background:#fff;color:var(--ink);font-family:"Montserrat",system-ui,sans-serif;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
-  header{background:var(--crimson);color:#fff}
+  header{background:#fff;border-bottom:1px solid var(--line)}
+  .logo img{display:block;height:44px;width:auto}
   .wrap{max-width:720px;margin:0 auto;padding:0 24px}
   @media (max-width:600px){.wrap{padding:0 16px}}
   header .wrap{padding-top:22px;padding-bottom:22px}
@@ -31,7 +32,7 @@
 </style>
 </head>
 <body>
-<header><div class="wrap"><a class="mark" href="/">Rekrootly</a></div></header>
+<header class="site-head"><div class="wrap"><a class="logo" href="/"><img src="/logo.png" alt="Rekrootly" height="44"></a></div></header>
 <main>
   <div class="wrap">
     <h1>Privacy notice</h1>

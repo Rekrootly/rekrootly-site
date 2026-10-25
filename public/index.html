@@ -57,6 +57,10 @@
   .top{background:var(--crimson);color:#fff;position:relative;overflow:hidden}
   .top::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.2px);background-size:22px 22px;pointer-events:none}
   .top>*{position:relative;z-index:1}
+  .site-head{background:#fff;border-bottom:1px solid var(--line)}
+  .site-head nav{padding:16px 0}
+  .logo img{display:block;height:44px;width:auto}
+  .site-head a:focus-visible{outline-color:var(--crimson)}
   nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
   .mark{font-family:var(--serif);font-weight:700;font-size:26px;letter-spacing:.2px;text-decoration:none}
   .navlinks{display:flex;gap:28px;font-size:15px;font-weight:500}
@@ -121,16 +125,20 @@
 </head>
 <body>
 
-<header class="top">
+<header class="site-head">
   <div class="wrap">
     <nav aria-label="Main">
-      <a class="mark" href="/">Rekrootly</a>
+      <a class="logo" href="/"><img src="/logo.png" alt="Rekrootly" height="44"></a>
       <div class="navlinks">
         <a class="hide-sm" href="#expert-roles">Expert roles</a>
         <a class="hide-sm" href="#businesses">For businesses</a>
         <a href="mailto:admin@rekrootly.com">Contact</a>
       </div>
     </nav>
+  </div>
+</header>
+<section class="top">
+  <div class="wrap">
     <div class="hero">
       <h1>Recruitment for sales talent and specialist professionals.</h1>
       <p>Rekrootly is a UK recruitment company. We find commission-based sales talent for growing businesses, and we introduce experienced professionals to remote expert roles on AI training projects.</p>
@@ -140,7 +148,7 @@
       </div>
     </div>
   </div>
-</header>
+</section>
 
 <main>
   <section id="expert-roles">
