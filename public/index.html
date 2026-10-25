@@ -33,152 +33,240 @@
   :root{
     --crimson:#b91c2b;
     --crimson-deep:#8f1420;
-    --black:#000000;
+    --black:#0a0a0b;
     --ink:#1c1c1e;
     --muted:#5c5c63;
     --line:#e3e1dc;
     --paper:#ffffff;
     --soft:#f6f5f2;
     --gold:#c9a24a;
+    --gold-soft:#f3e7c6;
     --serif:"Playfair Display", Georgia, serif;
     --sans:"Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  a:focus-visible,.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
-  .top a:focus-visible{outline-color:#fff}
+  p{margin:0}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
   @media (max-width:600px){.wrap{padding:0 16px}}
+  .label{font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase}
 
-  /* Header + hero share the crimson canvas */
-  .top{background:var(--crimson);color:#fff;position:relative;overflow:hidden}
-  .top::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.2px);background-size:22px 22px;pointer-events:none}
-  .top>*{position:relative;z-index:1}
-  .site-head{background:#fff;border-bottom:1px solid var(--line)}
-  .site-head nav{padding:16px 0}
-  .logo img{display:block;height:44px;width:auto}
-  .site-head a:focus-visible{outline-color:var(--crimson)}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
-  .mark{font-family:var(--serif);font-weight:700;font-size:26px;letter-spacing:.2px;text-decoration:none}
-  .navlinks{display:flex;gap:28px;font-size:15px;font-weight:500}
-  .navlinks a{text-decoration:none;opacity:.9}
-  .navlinks a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
-  @media (max-width:640px){.navlinks a.hide-sm{display:none}}
+  /* ---------- header: white, holds the logo, tightens and shows scroll progress ---------- */
+  .site-head{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);transition:box-shadow .25s ease}
+  .site-head.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.08)}
+  .site-head nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;transition:padding .25s ease}
+  .site-head.scrolled nav{padding:9px 0}
+  .logo img{display:block;height:44px;width:auto;transition:height .25s ease}
+  .site-head.scrolled .logo img{height:34px}
+  .navlinks{display:flex;align-items:center;gap:28px;font-size:15px;font-weight:500}
+  .navlinks a{text-decoration:none;color:var(--muted)}
+  .navlinks a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:6px}
+  .navlinks .btn{padding:10px 18px;font-size:14px;color:#fff}
+  .navlinks .btn:hover{text-decoration:none;color:#fff}
+  @media (max-width:640px){.navlinks a.hide-sm{display:none}.logo img{height:36px}}
+  .progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--crimson);transform-origin:0 50%;transform:scaleX(0)}
 
-  .hero{padding:72px 0 96px;max-width:760px}
-  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,6vw,64px);line-height:1.08;margin:0 0 24px;letter-spacing:-.5px}
-  .hero p{font-size:19px;line-height:1.6;margin:0 0 36px;max-width:620px;color:#fbe9eb}
-  .actions{display:flex;flex-wrap:wrap;gap:14px}
-  .btn{display:inline-block;font-family:var(--sans);font-weight:600;font-size:16px;text-decoration:none;padding:15px 26px;border-radius:6px;border:2px solid transparent;transition:background-color .15s, color .15s}
+  /* ---------- buttons ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans);font-weight:600;font-size:16px;text-decoration:none;padding:15px 26px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease, background-color .15s, color .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn:active{transform:translateY(1px)}
   .btn-light{background:#fff;color:var(--crimson-deep)}
-  .btn-light:hover{background:#fbe9eb}
-  .btn-ghost{border-color:rgba(255,255,255,.75);color:#fff}
-  .btn-ghost:hover{background:rgba(255,255,255,.1)}
+  .btn-light:hover{box-shadow:0 10px 30px rgba(255,255,255,.18)}
+  .btn-ghost{border-color:rgba(255,255,255,.55);color:#fff}
+  .btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
   .btn-crimson{background:var(--crimson);color:#fff}
-  .btn-crimson:hover{background:var(--crimson-deep)}
+  .btn-crimson:hover{background:var(--crimson-deep);box-shadow:0 10px 26px rgba(185,28,43,.28)}
   .btn-gold{border-color:var(--gold);color:#fff}
-  .btn-gold:hover{background:rgba(201,162,74,.15)}
-  @media (max-width:480px){.actions .btn{width:100%;text-align:center}}
+  .btn-gold:hover{background:rgba(201,162,74,.16);box-shadow:0 10px 26px rgba(201,162,74,.16)}
+  .arrow{display:inline-block;transition:transform .2s ease}
+  .btn:hover .arrow{transform:translateX(3px)}
 
-  section{padding:88px 0}
-  @media (max-width:600px){section{padding:64px 0}.hero{padding:48px 0 72px}}
-  h2{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.15;margin:0 0 18px;letter-spacing:-.3px}
-  .lede{font-size:18px;color:var(--muted);max-width:640px;margin:0 0 48px}
+  /* ---------- hero: dark field lit by a drifting or pointer-following light ---------- */
+  .hero{position:relative;overflow:hidden;color:#fff;background:linear-gradient(to bottom,#09090a 0%,#120608 55%,#2c0b11 82%,#6e1520 94%,var(--crimson) 100%)}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--crimson-deep) 0%,var(--gold) 30%,#f1dca0 50%,var(--gold) 70%,var(--crimson-deep) 100%);background-size:200% 100%;animation:glint 7s linear infinite}
+  @keyframes glint{to{background-position:-200% 0}}
+  .field{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+  .hero-inner{position:relative;z-index:1}
+  .hero-copy{max-width:780px;padding:104px 0 112px}
+  .eyebrow{color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:34px;height:2px;background:var(--gold)}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,6.4vw,70px);line-height:1.06;margin:0 0 26px;letter-spacing:-.6px}
+  .hero h1 em{font-style:normal;color:var(--gold)}
+  .hero .sub{font-size:19px;line-height:1.65;margin:0 0 38px;max-width:640px;color:#d9d3d4}
+  .actions{display:flex;flex-wrap:wrap;gap:14px}
+  .hero .disclose{margin-top:30px;font-size:14px;color:#b9b2b4;max-width:520px}
+  .rise{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+  .d1{animation-delay:.05s}.d2{animation-delay:.18s}.d3{animation-delay:.3s}.d4{animation-delay:.42s}.d5{animation-delay:.54s}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @media (max-width:600px){.hero-copy{padding:64px 0 76px}.hero .sub{font-size:17px}}
+  @media (max-width:480px){.actions .btn{width:100%}}
 
+  /* ---------- ticker ---------- */
+  .strip{border-bottom:1px solid var(--line);background:#fff;overflow:hidden}
+  .strip-track{display:flex;width:max-content;animation:slide 48s linear infinite}
+  .strip:hover .strip-track{animation-play-state:paused}
+  .strip ul{list-style:none;display:flex;margin:0;padding:0}
+  .strip li{padding:18px 26px;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:26px;font-weight:500;font-size:15px}
+  .strip li::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--crimson)}
+  @keyframes slide{to{transform:translateX(-50%)}}
+
+  /* ---------- sections ---------- */
+  section.pad{padding:clamp(64px,9vw,104px) 0}
+  .sec-label{color:var(--crimson);margin-bottom:14px}
+  h2{font-family:var(--serif);font-weight:700;font-size:clamp(30px,4.2vw,44px);line-height:1.12;margin:0 0 18px;letter-spacing:-.3px;text-wrap:balance}
+  .lede{font-size:18px;color:var(--muted);max-width:660px;margin:0 0 52px}
   .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:start}
+  .grid>*{min-width:0}
   @media (max-width:860px){.grid{grid-template-columns:1fr;gap:48px}}
 
-  .steps{list-style:none;margin:0;padding:0;counter-reset:s}
-  .steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--line)}
-  .steps li:last-child{border-bottom:1px solid var(--line)}
-  .steps li::before{content:counter(s);font-family:var(--serif);font-weight:700;font-size:28px;line-height:1;color:var(--crimson)}
-  .steps h3{margin:0 0 4px;font-size:17px;font-weight:600}
-  .steps p{margin:0;color:var(--muted);font-size:16px}
+  /* steps: the line fills as you scroll, each number lights in turn */
+  .steps{list-style:none;margin:0;padding:0;position:relative;--p:0}
+  .steps::before{content:"";position:absolute;left:19px;top:20px;bottom:20px;width:2px;background:var(--line)}
+  .steps::after{content:"";position:absolute;left:19px;top:20px;bottom:20px;width:2px;background:linear-gradient(to bottom,var(--crimson),var(--gold));transform-origin:0 0;transform:scaleY(var(--p))}
+  .steps li{position:relative;padding:0 0 38px 62px}
+  .steps li:last-child{padding-bottom:0}
+  .steps .n{position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid var(--line);font:700 17px var(--serif);color:var(--muted);transition:background-color .35s, border-color .35s, color .35s, transform .35s;z-index:1}
+  .steps li.on .n{background:var(--crimson);border-color:var(--crimson);color:#fff;transform:scale(1.06)}
+  .steps h3{margin:6px 0 6px;font-size:18px;font-weight:600}
+  .steps p{color:var(--muted);font-size:16px}
 
-  .areas{background:var(--soft);border-radius:10px;padding:32px}
-  .areas h3{font-family:var(--serif);font-size:24px;margin:0 0 6px}
+  /* areas card */
+  .areas{background:#fff;border:1.5px solid var(--ink);border-radius:18px;padding:32px;box-shadow:8px 8px 0 var(--gold)}
+  .areas h3{font-family:var(--serif);font-size:25px;margin:0 0 6px}
   .areas>p{margin:0 0 20px;color:var(--muted);font-size:15px}
   .areas ul{list-style:none;margin:0 0 28px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
   @media (max-width:420px){.areas ul{grid-template-columns:1fr}}
-  .areas li{padding:11px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:500}
-  .areas .btn{width:100%;text-align:center}
+  .areas li{padding:11px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:500;transition:transform .2s ease, color .2s ease, border-color .2s ease}
+  .areas li:hover{transform:translateX(5px);color:var(--crimson);border-color:var(--gold)}
+  .areas .btn{width:100%}
 
-  .note{margin-top:56px;border-left:4px solid var(--gold);background:var(--soft);padding:22px 26px;border-radius:0 8px 8px 0;max-width:760px}
-  .note h3{margin:0 0 6px;font-size:17px;font-weight:600}
-  .note p{margin:0;color:var(--muted);font-size:16px}
+  .note{margin-top:60px;display:flex;gap:18px;align-items:flex-start;border:1px solid var(--gold);background:linear-gradient(100deg,var(--gold-soft),#fff 70%);padding:24px 28px;border-radius:16px;max-width:780px}
+  .note .dot{flex:none;width:12px;height:12px;border-radius:50%;background:var(--crimson);margin-top:8px;box-shadow:0 0 0 0 rgba(185,28,43,.45);animation:pulse 2.8s ease-out infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 12px rgba(185,28,43,0)}100%{box-shadow:0 0 0 0 rgba(185,28,43,0)}}
+  .note h3{margin:0 0 4px;font-size:17px;font-weight:600}
+  .note p{color:var(--muted);font-size:16px}
 
-  .biz{background:var(--black);color:#fff}
-  .biz .grid{align-items:center}
+  /* faq */
+  .faq-sec{background:var(--soft)}
+  .faq{max-width:780px;margin-top:6px}
+  .faq details{border-top:1px solid #d8d5ce}
+  .faq details:last-child{border-bottom:1px solid #d8d5ce}
+  .faq summary{cursor:pointer;list-style:none;padding:22px 44px 22px 0;font-family:var(--serif);font-weight:700;font-size:20px;position:relative;transition:color .2s}
+  .faq summary:hover{color:var(--crimson)}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";position:absolute;right:4px;top:15px;font:400 30px var(--sans);color:var(--crimson);transition:transform .25s ease}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{padding:0 44px 24px 0;color:var(--muted);animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+
+  /* business band */
+  .biz{position:relative;overflow:hidden;background:var(--black);color:#fff}
+  .biz .field{opacity:.9}
+  .biz .wrap{position:relative;z-index:1}
+  .biz .sec-label{color:var(--gold)}
   .biz p{color:#cfcfd3;margin:0 0 16px;max-width:560px}
-  .biz ul{margin:0;padding:0;list-style:none}
-  .biz li{padding:14px 0;border-top:1px solid #2c2c2e;color:#e6e6e8}
-  .biz li:last-child{border-bottom:1px solid #2c2c2e}
-  .biz li strong{color:var(--gold);font-weight:600}
+  .biz .grid{align-items:center}
+  .roles{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+  .roles li{display:flex;gap:18px;align-items:flex-start;padding:20px 22px;border:1px solid #2e2e31;border-radius:16px;background:rgba(255,255,255,.03);color:#d8d8dc;transition:transform .25s ease, border-color .25s ease, background-color .25s ease}
+  .roles li:hover{transform:translateY(-3px);border-color:var(--gold);background:rgba(201,162,74,.07)}
+  .roles .k{flex:none;font:700 15px var(--serif);color:var(--gold);padding-top:2px}
+  .roles strong{display:block;color:#fff;font-weight:600;margin-bottom:2px}
 
   footer{padding:40px 0;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
   .foot{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
-  .foot nav{padding:0;display:flex;gap:24px}
+  .foot nav{display:flex;gap:24px}
+  .foot a{text-decoration:none}
+  .foot a:hover{text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
+
+  /* reveal on scroll (only below the first screen) */
+  .rv{transition:opacity .7s ease, transform .7s ease}
+  .rv.pre{opacity:0;transform:translateY(18px)}
+  .rv.s1{transition-delay:.08s}.rv.s2{transition-delay:.16s}.rv.s3{transition-delay:.24s}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .rise{animation:none}
+    .hero::after,.note .dot{animation:none}
+    .strip-track{animation:none;flex-wrap:wrap;width:auto}
+    .strip ul[aria-hidden]{display:none}
+    .rv{transition:none}.rv.pre{opacity:1;transform:none}
+    .btn,.arrow,.areas li,.roles li{transition:none}
+  }
 </style>
 </head>
 <body>
 
-<header class="site-head">
+<header class="site-head" id="head">
   <div class="wrap">
     <nav aria-label="Main">
       <a class="logo" href="/"><img src="/logo.png" alt="Rekrootly" height="44"></a>
       <div class="navlinks">
         <a class="hide-sm" href="#expert-roles">Expert roles</a>
         <a class="hide-sm" href="#businesses">For businesses</a>
-        <a href="mailto:admin@rekrootly.com">Contact</a>
+        <a class="btn btn-crimson" href="mailto:admin@rekrootly.com">Contact</a>
       </div>
     </nav>
   </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
 </header>
-<section class="top">
-  <div class="wrap">
-    <div class="hero">
-      <h1>Recruitment for sales talent and specialist professionals.</h1>
-      <p>Rekrootly is a UK recruitment company. We find commission-based sales talent for growing businesses, and we introduce experienced professionals to remote expert roles on AI training projects.</p>
-      <div class="actions">
-        <a class="btn btn-light" href="#expert-roles">See expert roles</a>
+
+<section class="hero" id="top">
+  <canvas class="field" id="field" aria-hidden="true"></canvas>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <div class="label eyebrow rise d1">UK recruitment company</div>
+      <h1 class="rise d2">Recruitment for sales talent and <em>specialist professionals.</em></h1>
+      <p class="sub rise d3">Rekrootly is a UK recruitment company. We find commission-based sales talent for growing businesses, and we introduce experienced professionals to remote expert roles on AI training projects.</p>
+      <div class="actions rise d4">
+        <a class="btn btn-light" href="#expert-roles">See expert roles <span class="arrow" aria-hidden="true">&rarr;</span></a>
         <a class="btn btn-ghost" href="#businesses">Hire sales talent</a>
       </div>
+      <p class="disclose rise d5">Rekrootly may receive a referral fee from the hiring company if you're engaged. You never pay us anything.</p>
     </div>
   </div>
 </section>
 
+<div class="strip" aria-label="Areas with open expert roles">
+  <div class="strip-track">
+    <ul>
+      <li>Legal</li><li>Medical and clinical</li><li>Science and research</li><li>Software and security</li><li>Finance and tax</li><li>Languages</li><li>Education</li><li>Generalist roles</li>
+    </ul>
+    <ul aria-hidden="true">
+      <li>Legal</li><li>Medical and clinical</li><li>Science and research</li><li>Software and security</li><li>Finance and tax</li><li>Languages</li><li>Education</li><li>Generalist roles</li>
+    </ul>
+  </div>
+</div>
+
 <main>
-  <section id="expert-roles">
+  <section class="pad" id="expert-roles">
     <div class="wrap">
-      <h2>Remote expert roles on AI training projects</h2>
-      <p class="lede">AI companies need people with real professional experience to review, evaluate and improve their systems. If you're a qualified professional, your judgement is the skill. Many roles don't ask for any prior AI experience.</p>
+      <div class="label sec-label rv">Expert roles</div>
+      <h2 class="rv s1">Remote expert roles on AI training projects</h2>
+      <p class="lede rv s2">AI companies need people with real professional experience to review, evaluate and improve their systems. If you're a qualified professional, your judgement is the skill. Many roles don't ask for any prior AI experience.</p>
 
       <div class="grid">
-        <ol class="steps">
+        <ol class="steps rv" id="steps">
           <li>
-            <div>
-              <h3>Find a role that fits your background</h3>
-              <p>Browse the current openings and check the requirements, location and hours on each listing.</p>
-            </div>
+            <span class="n" aria-hidden="true">1</span>
+            <h3>Find a role that fits your background</h3>
+            <p>Browse the current openings and check the requirements, location and hours on each listing.</p>
           </li>
           <li>
-            <div>
-              <h3>Apply on the hiring company's own site</h3>
-              <p>Every link takes you straight to the company's application page. You apply to them, not to us.</p>
-            </div>
+            <span class="n" aria-hidden="true">2</span>
+            <h3>Apply on the hiring company's own site</h3>
+            <p>Every link takes you straight to the company's application page. You apply to them, not to us.</p>
           </li>
           <li>
-            <div>
-              <h3>The company screens and engages you</h3>
-              <p>Roles are contract work with the hiring company. They decide who is engaged and agree the terms with you directly.</p>
-            </div>
+            <span class="n" aria-hidden="true">3</span>
+            <h3>The company screens and engages you</h3>
+            <p>Roles are contract work with the hiring company. They decide who is engaged and agree the terms with you directly.</p>
           </li>
         </ol>
 
-        <div class="areas">
+        <div class="areas rv s1">
           <h3>Areas with open roles</h3>
           <p>Openings change often. The full list shows what's open today.</p>
           <ul>
@@ -191,31 +279,61 @@
             <li>Education</li>
             <li>Generalist roles</li>
           </ul>
-          <a class="btn btn-crimson" href="https://refer.micro1.ai/referral/jobs?referralCode=b4c05262-bf90-4367-9b47-604a265ad0e3&amp;utm_source=referral&amp;utm_medium=share&amp;utm_campaign=job_referral" target="_blank" rel="noopener">Browse all open roles</a>
+          <a class="btn btn-crimson" href="https://refer.micro1.ai/referral/jobs?referralCode=b4c05262-bf90-4367-9b47-604a265ad0e3&amp;utm_source=referral&amp;utm_medium=share&amp;utm_campaign=job_referral" target="_blank" rel="noopener">Browse all open roles <span class="arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
 
-      <div class="note">
-        <h3>How Rekrootly is paid</h3>
-        <p>Rekrootly may receive a referral fee from the hiring company if you're engaged. You never pay us anything.</p>
+      <div class="note rv">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <h3>How Rekrootly is paid</h3>
+          <p>Rekrootly may receive a referral fee from the hiring company if you're engaged. You never pay us anything.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="businesses" class="biz">
+  <section class="pad faq-sec" id="questions">
+    <div class="wrap">
+      <div class="label sec-label rv">Questions</div>
+      <h2 class="rv s1">Before you apply</h2>
+      <div class="faq rv s2">
+        <details>
+          <summary>Do I need AI experience?</summary>
+          <p>Many roles don't ask for any prior AI experience. Your professional judgement is the skill, and each listing sets out its own requirements.</p>
+        </details>
+        <details>
+          <summary>Who do I apply to?</summary>
+          <p>The hiring company. Every link takes you straight to the company's own application page, so you apply to them, not to us.</p>
+        </details>
+        <details>
+          <summary>Does it cost me anything?</summary>
+          <p>No. You never pay Rekrootly anything. We may receive a referral fee from the hiring company if you're engaged.</p>
+        </details>
+        <details>
+          <summary>Who decides whether I'm engaged?</summary>
+          <p>The hiring company. Roles are contract work with them, and they agree the terms with you directly.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad biz" id="businesses">
+    <canvas class="field" id="field2" aria-hidden="true"></canvas>
     <div class="wrap grid">
       <div>
-        <h2>Hiring commission-based sales talent?</h2>
-        <p>Rekrootly is built on more than a decade in high-ticket sales: as a rep, a sales manager, a coach and a recruiter. We understand what makes a setter or closer right for your offer, not just what's on their CV.</p>
-        <p>Tell us the role, the offer and how you sell, and we'll come back to you.</p>
-        <div class="actions" style="margin-top:28px">
-          <a class="btn btn-gold" href="mailto:admin@rekrootly.com?subject=Hiring%20sales%20talent">Email us about a role</a>
+        <div class="label sec-label rv">For businesses</div>
+        <h2 class="rv s1">Hiring commission-based sales talent?</h2>
+        <p class="rv s2">Rekrootly is built on more than a decade in high-ticket sales: as a rep, a sales manager, a coach and a recruiter. We understand what makes a setter or closer right for your offer, not just what's on their CV.</p>
+        <p class="rv s2">Tell us the role, the offer and how you sell, and we'll come back to you.</p>
+        <div class="actions rv s3" style="margin-top:28px">
+          <a class="btn btn-gold" href="mailto:admin@rekrootly.com?subject=Hiring%20sales%20talent">Email us about a role <span class="arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
-      <ul>
-        <li><strong>Appointment setters</strong> for warm and inbound pipelines</li>
-        <li><strong>SDRs</strong> for cold outbound</li>
-        <li><strong>Closers</strong> for high-ticket offers</li>
+      <ul class="roles">
+        <li class="rv"><span class="k">01</span><span><strong>Appointment setters</strong>for warm and inbound pipelines</span></li>
+        <li class="rv s1"><span class="k">02</span><span><strong>SDRs</strong>for cold outbound</span></li>
+        <li class="rv s2"><span class="k">03</span><span><strong>Closers</strong>for high-ticket offers</span></li>
       </ul>
     </div>
   </section>
@@ -230,6 +348,110 @@
     </nav>
   </div>
 </footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- dot field: dim points, lit where the light passes ---------- */
+  function makeField(cv, host, soft) {
+    if (!cv) return;
+    var ctx = cv.getContext('2d');
+    var W = 0, H = 0, GAP = 26, pointer = null, cur = null, running = false, raf = 0;
+    function resize() {
+      var r = cv.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = r.width; H = r.height;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw(performance.now());
+    }
+    function draw(time) {
+      ctx.clearRect(0, 0, W, H);
+      var tx, ty;
+      if (pointer) { tx = pointer.x; ty = pointer.y; }
+      else { tx = W * (0.5 + 0.34 * Math.sin(time / 5200)); ty = H * (0.72 - 0.08 * Math.sin(time / 3100)); }
+      if (!cur) cur = { x: tx, y: ty };
+      cur.x += (tx - cur.x) * 0.06; cur.y += (ty - cur.y) * 0.06;
+      var R = Math.max(220, Math.min(W, 1200) * 0.24);
+      var g = ctx.createRadialGradient(cur.x, cur.y, 0, cur.x, cur.y, R * 1.5);
+      g.addColorStop(0, 'rgba(185,28,43,' + (soft ? 0.22 : 0.34) + ')');
+      g.addColorStop(1, 'rgba(185,28,43,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      var cols = Math.ceil(W / GAP), rows = Math.ceil(H / GAP);
+      for (var i = 0; i < cols; i++) {
+        for (var j = 0; j < rows; j++) {
+          var x = i * GAP + GAP / 2, y = j * GAP + GAP / 2;
+          var dx = x - cur.x, dy = (y - cur.y) * 1.25;
+          var l = Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / R); l = l * l;
+          var depth = 0.35 + 0.65 * (y / H);
+          var a = (soft ? 0.09 : 0.14) * depth + 0.85 * l;
+          var rad = 1 + 1.7 * l;
+          ctx.fillStyle = l > 0.03 ? 'rgba(233,196,106,' + a.toFixed(3) + ')' : 'rgba(190,185,186,' + a.toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(x, y, rad, 0, 6.2832); ctx.fill();
+        }
+      }
+    }
+    function loop(t) { if (!running) return; draw(t); raf = requestAnimationFrame(loop); }
+    function start() { if (reduce || running) return; running = true; raf = requestAnimationFrame(loop); }
+    function stop() { running = false; cancelAnimationFrame(raf); }
+    resize();
+    window.addEventListener('resize', resize);
+    if (!reduce) {
+      host.addEventListener('pointermove', function (e) {
+        var r = cv.getBoundingClientRect();
+        pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+      });
+      host.addEventListener('pointerleave', function () { pointer = null; });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) { es[0].isIntersecting ? start() : stop(); }).observe(host);
+      } else { start(); }
+    }
+  }
+  makeField(document.getElementById('field'), document.getElementById('top'), false);
+  makeField(document.getElementById('field2'), document.getElementById('businesses'), true);
+
+  /* ---------- header: tighten after a little scroll, thin progress line ---------- */
+  var head = document.getElementById('head');
+  var bar = document.getElementById('progress');
+  var ticking = false;
+  var steps = document.getElementById('steps');
+  var stepItems = steps ? Array.prototype.slice.call(steps.children) : [];
+  function onScroll() {
+    var y = window.pageYOffset || document.documentElement.scrollTop;
+    head.classList.toggle('scrolled', y > 40);
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ')';
+    if (steps) {
+      var r = steps.getBoundingClientRect();
+      var mid = window.innerHeight * 0.62;
+      var p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
+      steps.style.setProperty('--p', reduce ? 1 : p.toFixed(4));
+      stepItems.forEach(function (li) {
+        var lr = li.getBoundingClientRect();
+        li.classList.toggle('on', reduce || lr.top < mid);
+      });
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---------- reveal on scroll, only for content below the first screen ---------- */
+  var items = Array.prototype.slice.call(document.querySelectorAll('.rv'));
+  if (!reduce && 'IntersectionObserver' in window) {
+    var vh = window.innerHeight;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) {
+      if (el.getBoundingClientRect().top > vh) { el.classList.add('pre'); io.observe(el); }
+    });
+    setTimeout(function () { items.forEach(function (el) { el.classList.remove('pre'); }); }, 6000);
+  }
+})();
+</script>
 
 </body>
 </html>
